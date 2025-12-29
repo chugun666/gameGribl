@@ -74,14 +74,14 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         # Проверка, стоит ли игрок на чем-то
-        self.rect.y += 8
+        self.rect.y += 6
         hit = pygame.sprite.spritecollide(self, self.level.platform_list, False)
-        self.rect.y -= 8
+        self.rect.y -= 6
         if len(hit) > 0:
-            self.change_y = -10
+            self.change_y = -14
 
-    def go_left(self): self.change_x = -7
-    def go_right(self): self.change_x = 7
+    def go_left(self): self.change_x = -10
+    def go_right(self): self.change_x = 10
     def stop(self): self.change_x = 0
 
 class Block(pygame.sprite.Sprite):
@@ -118,10 +118,19 @@ class Level_01(Level):
         
         # Список платформ: [x, y, ширина, высота]
         level_layout = [
-            [0, 550, 800, 50],
+            [-800, 550, 8000, 50],
             [200, 450, 150, 20],
             [450, 350, 150, 20],
-            [100, 250, 150, 20]
+            [2450, 150, 150, 20],
+            [2150, 300, 150, 20],
+            [2750, 200, 150, 20],
+            [2750, 250, 150, 20],
+            [2750, 300, 150, 20],
+            [2750, 350, 150, 20],
+            [2750, 400, 150, 20],
+            [2750, 450, 150, 20],
+            [2750, 500, 150, 20],
+            [2750, 550, 150, 20],
         ]
 
         for plat in level_layout:

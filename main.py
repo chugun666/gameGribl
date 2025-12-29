@@ -1,7 +1,6 @@
 from constants import *
 from settings import *
 from classes import *
-from LEVELS.level1 import *
 
 
 import pygame
@@ -14,16 +13,18 @@ pygame.display.set_caption("писюны")
 clock = pygame.time.Clock()
 icon_surface = pygame.image.load(icon)
 pygame.display.set_icon(icon_surface)
+
 running = True
 menu_r = True
 level_r = False
 pause_r = False
 settings_r = False
 
-
 level1_r = True
 
 font = pygame.font.Font(None, 36)
+
+fontn = pygame.font.Font(None, 80)
 
 menu_surface = pygame.Surface((WIDTH, HEIGHT))
 
@@ -58,15 +59,16 @@ while running:
                 running = False
         if level_r:
             if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT: player.go_left()
-                    if event.key == pygame.K_RIGHT: player.go_right()
-                    if event.key == pygame.K_UP: player.jump()
+                    if (event.key == pygame.K_LEFT or event.key == pygame.K_a): player.go_left()
+                    if (event.key == pygame.K_RIGHT or event.key == pygame.K_d): player.go_right()
+                    if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_SPACE: player.jump()
             if event.type == pygame.KEYUP:
-                    if event.key in (pygame.K_LEFT, pygame.K_RIGHT): player.stop()
+                    if event.key in (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_d, pygame.K_a): player.stop()
 
     screen.fill(BLACK)
 
     if level_r:
+        print(player.rect.x)
         if level1_r:
             active_sprites.update()
 
@@ -95,6 +97,8 @@ while running:
 
         text_autor = font.render("made by chugun_666_", True, (255, 255, 255))
         screen.blit(text_autor, (20, 680))
+        text_namegame = fontn.render("ПИСЮНЫ", True, (255, 255, 255))
+        screen.blit(text_namegame, (510, 150))
     # После отрисовки всего, переворачиваем экран
     pygame.display.flip()
     clock.tick(FPS)
