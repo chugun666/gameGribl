@@ -97,12 +97,19 @@ class Level:
     def __init__(self, player):
         self.platform_list = pygame.sprite.Group()
         self.player = player
+        self.world_shift = 0  # На сколько сдвинут мир
+
+    def shift_world(self, shift_x):
+        self.world_shift += shift_x
+        for platform in self.platform_list:
+            platform.rect.x += shift_x
 
     def update(self):
         self.platform_list.update()
 
     def draw(self, screen):
-        screen.fill((200, 200, 255)) # Фон неба
+        screen.fill((200, 200, 255))
+        # Рисуем платформы с учетом их текущего rect.x (который меняется в shift_world)
         self.platform_list.draw(screen)
 
 class Level_01(Level):
@@ -120,26 +127,3 @@ class Level_01(Level):
         for plat in level_layout:
             block = Block(plat[0], plat[1], plat[2], plat[3])
             self.platform_list.add(block)
-
-class Camera:
-    def __init__(self, width, height):
-        self.camera = pygame.Rect(0, 0, width, height)
-        self.width = width
-        self.height = height
-
-    def apply(self, entity):
-        """Возвращает прямоугольник объекта со сдвигом для отрисовки."""
-        return entity.rect.move(self.camera.topleft)
-
-    def update(self, target):
-        """Центрирует камеру на объекте target (игроке)."""
-        x = -target.rect.centerx + int(WIDTH / 2)
-        y = -target.rect.centery + int(HEIGHT / 2)
-        
-        # Ограничение камеры, чтобы она не выходила за границы уровня
-        x = min(0, x)  # Левая граница
-        y = min(0, y)  # Верхняя граница
-        x = max(-(self.width - WIDTH), x)   # Правая граница
-        y = max(-(self.height - HEIGHT), y) # Нижняя граница
-        
-        self.camera = pygame.Rect(x, y, self.width, self.height)

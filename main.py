@@ -35,7 +35,6 @@ level = Level_01(player)
 player.level = level
 active_sprites = pygame.sprite.Group()
 active_sprites.add(player)
-camera = Camera(50, 500)
 
 start_button = Button(pb,"Начало", SEAGREEN)
 settings_button = Button(sb,"Настройки", SEAGREEN)
@@ -69,10 +68,21 @@ while running:
 
     if level_r:
         if level1_r:
-            camera.update(player)
-            for block in level.platform_list:
-                screen.blit(block.image, camera.apply(block))
             active_sprites.update()
+
+            # ЛОГИКА КАМЕРЫ:
+            # Если игрок подходит к правой границе (на 1/4 экрана)
+            if player.rect.right >= 800:
+                diff = player.rect.right - 800
+                player.rect.right = 800
+                level.shift_world(-diff)
+
+            # Если игрок подходит к левой границе
+            if player.rect.left <= 400:
+                diff = 400 - player.rect.left
+                player.rect.left = 400
+                level.shift_world(diff)
+
             level.draw(screen)
             active_sprites.draw(screen)
     elif menu_r:
