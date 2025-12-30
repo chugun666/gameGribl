@@ -31,7 +31,7 @@ menu_surface = pygame.Surface((WIDTH, HEIGHT))
 back_menu = pygame.image.load(KpssM)
 
 
-player = Player(50, 500)
+player = Player(50, 600)
 level = Level_01(player)
 player.level = level
 active_sprites = pygame.sprite.Group()
@@ -77,13 +77,24 @@ while running:
             if player.rect.right >= 800:
                 diff = player.rect.right - 800
                 player.rect.right = 800
-                level.shift_world(-diff)
+                level.shift_world_x(-diff)
 
             # Если игрок подходит к левой границе
             if player.rect.left <= 400:
                 diff = 400 - player.rect.left
                 player.rect.left = 400
-                level.shift_world(diff)
+                level.shift_world_x(diff)
+
+            if player.rect.y <= 200:
+                 diff = 200 - player.rect.y
+                 player.rect.y = 200
+                 level.shift_world_y(diff)
+
+            if player.rect.y >= 600:
+                 diff = player.rect.y - 600
+                 player.rect.y = 600
+                 level.shift_world_y(-diff)
+
 
             level.draw(screen)
             active_sprites.draw(screen)

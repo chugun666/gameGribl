@@ -97,12 +97,19 @@ class Level:
     def __init__(self, player):
         self.platform_list = pygame.sprite.Group()
         self.player = player
-        self.world_shift = 0  # На сколько сдвинут мир
+        self.world_shift_x = 0  # На сколько сдвинут мир по х
+        self.world_shift_y = 0  # На сколько сдвинут мир по у
 
-    def shift_world(self, shift_x):
-        self.world_shift += shift_x
+
+    def shift_world_x(self, shift_x):
+        self.world_shift_x += shift_x
         for platform in self.platform_list:
             platform.rect.x += shift_x
+
+    def shift_world_y(self, shift_y):
+        self.world_shift_y += shift_y
+        for platform in self.platform_list:
+            platform.rect.y += shift_y
 
     def update(self):
         self.platform_list.update()
@@ -118,19 +125,19 @@ class Level_01(Level):
         
         # Список платформ: [x, y, ширина, высота]
         level_layout = [
-            [-800, 550, 8000, 50],
-            [200, 450, 150, 20],
-            [450, 350, 150, 20],
-            [2450, 150, 150, 20],
-            [2150, 300, 150, 20],
-            [2750, 200, 150, 20],
-            [2750, 250, 150, 20],
+            [-800, 650, 8000, 50],
+            [200, 550, 150, 20],
+            [450, 450, 150, 20],
+            [2450, 250, 150, 20],
+            [2150, 400, 150, 20],
             [2750, 300, 150, 20],
             [2750, 350, 150, 20],
             [2750, 400, 150, 20],
             [2750, 450, 150, 20],
             [2750, 500, 150, 20],
             [2750, 550, 150, 20],
+            [2750, 600, 150, 20],
+            [2750, 650, 150, 20],
         ]
 
         for plat in level_layout:
